@@ -7,7 +7,7 @@ public class mobil : MonoBehaviour
     private bool isBraking;
 
     // Settings
-    [SerializeField] private float motorForce = 1500f;
+    [SerializeField] private float motorForce = 8000f; // dinaikkan
     [SerializeField] private float brakeForce = 3000f;
     [SerializeField] private float maxSteerAngle = 30f;
 
@@ -33,13 +33,8 @@ public class mobil : MonoBehaviour
 
     private void GetInput()
     {
-        // Steering
         horizontalInput = Input.GetAxis("Horizontal");
-
-        // Gas / Reverse
         verticalInput = Input.GetAxis("Vertical");
-
-        // Brake
         isBraking = Input.GetKey(KeyCode.Space);
     }
 
@@ -47,18 +42,14 @@ public class mobil : MonoBehaviour
     {
         if (isBraking)
         {
-            // Matikan tenaga mesin saat rem
             rearLeftWheelCollider.motorTorque = 0f;
             rearRightWheelCollider.motorTorque = 0f;
-
             currentBrakeForce = brakeForce;
         }
         else
         {
-            // RWD = roda belakang penggerak
             rearLeftWheelCollider.motorTorque = verticalInput * motorForce;
             rearRightWheelCollider.motorTorque = verticalInput * motorForce;
-
             currentBrakeForce = 0f;
         }
 
@@ -77,7 +68,6 @@ public class mobil : MonoBehaviour
     {
         currentSteerAngle = maxSteerAngle * horizontalInput;
 
-        // Steering hanya roda depan
         frontLeftWheelCollider.steerAngle = currentSteerAngle;
         frontRightWheelCollider.steerAngle = currentSteerAngle;
     }
@@ -99,7 +89,6 @@ public class mobil : MonoBehaviour
 
         wheelTransform.position = pos;
 
-        // Membalik rotasi roda kiri agar normal
         if (isLeftWheel)
         {
             wheelTransform.rotation = rot * Quaternion.Euler(0, 180, 0);
