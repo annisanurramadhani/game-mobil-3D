@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class FinishLine : MonoBehaviour
 {
@@ -7,7 +6,7 @@ public class FinishLine : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SceneManager.LoadScene("Level2");
+            FindObjectOfType<WinPanelManager>().ShowWinPanel();
         }
     }
 }

@@ -6,8 +6,11 @@ public class mobil : MonoBehaviour
     private float currentSteerAngle, currentBrakeForce;
     private bool isBraking;
 
+    // Joystick
+    public FixedJoystick joystick;
+
     // Settings
-    [SerializeField] private float motorForce = 8000f; // dinaikkan
+    [SerializeField] private float motorForce = 6000f;
     [SerializeField] private float brakeForce = 3000f;
     [SerializeField] private float maxSteerAngle = 30f;
 
@@ -33,8 +36,19 @@ public class mobil : MonoBehaviour
 
     private void GetInput()
     {
+        // Keyboard + Joystick
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
+
+        if (joystick != null)
+        {
+            if (Mathf.Abs(joystick.Horizontal) > 0.1f)
+                horizontalInput = joystick.Horizontal;
+
+            if (Mathf.Abs(joystick.Vertical) > 0.1f)
+                verticalInput = joystick.Vertical;
+        }
+
         isBraking = Input.GetKey(KeyCode.Space);
     }
 
@@ -44,13 +58,23 @@ public class mobil : MonoBehaviour
         {
             rearLeftWheelCollider.motorTorque = 0f;
             rearRightWheelCollider.motorTorque = 0f;
+
             currentBrakeForce = brakeForce;
         }
         else
         {
             rearLeftWheelCollider.motorTorque = verticalInput * motorForce;
             rearRightWheelCollider.motorTorque = verticalInput * motorForce;
-            currentBrakeForce = 0f;
+
+            // Rem otomatis saat tidak menginjak gas
+            if (Mathf.Abs(verticalInput) < 0.1f)
+            {
+                currentBrakeForce = 500f;
+            }
+            else
+            {
+                currentBrakeForce = 0f;
+            }
         }
 
         ApplyBraking();
