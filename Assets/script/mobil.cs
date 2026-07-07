@@ -4,14 +4,18 @@ public class mobil : MonoBehaviour
 {
     private float horizontalInput, verticalInput;
     private float currentSteerAngle, currentBrakeForce;
+
     private bool isBraking;
+    private bool isAccelerating;
+
+    private AudioSource engineSound;
 
     // Joystick
     public FixedJoystick joystick;
 
     // Settings
-    [SerializeField] private float motorForce = 6000f;
-    [SerializeField] private float brakeForce = 3000f;
+    [SerializeField] private float motorForce = 12000f;
+    [SerializeField] private float brakeForce = 6000f;
     [SerializeField] private float maxSteerAngle = 30f;
 
     // Wheel Colliders
@@ -26,6 +30,11 @@ public class mobil : MonoBehaviour
     [SerializeField] private Transform rearLeftWheelTransform;
     [SerializeField] private Transform rearRightWheelTransform;
 
+    private void Start()
+    {
+        engineSound = GetComponent<AudioSource>();
+    }
+
     private void FixedUpdate()
     {
         GetInput();
@@ -36,20 +45,50 @@ public class mobil : MonoBehaviour
 
     private void GetInput()
     {
-        // Keyboard + Joystick
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = 0f;
 
         if (joystick != null)
         {
-            if (Mathf.Abs(joystick.Horizontal) > 0.1f)
-                horizontalInput = joystick.Horizontal;
-
-            if (Mathf.Abs(joystick.Vertical) > 0.1f)
-                verticalInput = joystick.Vertical;
+            horizontalInput = joystick.Horizontal;
         }
 
-        isBraking = Input.GetKey(KeyCode.Space);
+        verticalInput = isAccelerating ? 1f : 0f;
+    }
+
+    // ==========================
+    // Tombol ACCEL
+    // ==========================
+    public void AccelDown()
+    {
+        isAccelerating = true;
+
+        if (engineSound != null && !engineSound.isPlaying)
+        {
+            engineSound.Play();
+        }
+    }
+
+    public void AccelUp()
+    {
+        isAccelerating = false;
+
+        if (engineSound != null && engineSound.isPlaying)
+        {
+            engineSound.Stop();
+        }
+    }
+
+    // ==========================
+    // Tombol BRAKE
+    // ==========================
+    public void BrakeDown()
+    {
+        isBraking = true;
+    }
+
+    public void BrakeUp()
+    {
+        isBraking = false;
     }
 
     private void HandleMotor()
@@ -61,20 +100,20 @@ public class mobil : MonoBehaviour
 
             currentBrakeForce = brakeForce;
         }
+        else if (isAccelerating)
+        {
+            rearLeftWheelCollider.motorTorque = motorForce;
+            rearRightWheelCollider.motorTorque = motorForce;
+
+            currentBrakeForce = 0f;
+        }
         else
         {
-            rearLeftWheelCollider.motorTorque = verticalInput * motorForce;
-            rearRightWheelCollider.motorTorque = verticalInput * motorForce;
+            // Menahan mobil agar tidak mundur
+            rearLeftWheelCollider.motorTorque = 0f;
+            rearRightWheelCollider.motorTorque = 0f;
 
-            // Rem otomatis saat tidak menginjak gas
-            if (Mathf.Abs(verticalInput) < 0.1f)
-            {
-                currentBrakeForce = 500f;
-            }
-            else
-            {
-                currentBrakeForce = 0f;
-            }
+            currentBrakeForce = brakeForce;
         }
 
         ApplyBraking();

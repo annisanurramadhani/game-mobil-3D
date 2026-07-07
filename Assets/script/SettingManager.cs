@@ -3,9 +3,16 @@ using UnityEngine.Audio;
 
 public class SettingManager : MonoBehaviour
 {
+    [Header("Panel")]
     public GameObject settingPanel;
     public GameObject exitPanel;
+
+    [Header("Audio Mixer")]
     public AudioMixer mainMixer;
+
+    // =========================
+    // PANEL SETTINGS
+    // =========================
 
     public void OpenSetting()
     {
@@ -16,6 +23,10 @@ public class SettingManager : MonoBehaviour
     {
         settingPanel.SetActive(false);
     }
+
+    // =========================
+    // EXIT PANEL
+    // =========================
 
     public void OpenExit()
     {
@@ -36,8 +47,19 @@ public class SettingManager : MonoBehaviour
 #endif
     }
 
+    // =========================
+    // AUDIO
+    // =========================
+
     public void SetMusicVolume(float volume)
     {
-        mainMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
+        volume = Mathf.Clamp(volume, 0.0001f, 1f);
+        mainMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20f);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        volume = Mathf.Clamp(volume, 0.0001f, 1f);
+        mainMixer.SetFloat("SFXVolume", Mathf.Log10(volume) * 20f);
     }
 }

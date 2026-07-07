@@ -1,0 +1,10 @@
+# ninja log v5
+385	17156	8050680977844720	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	71bd2f6577bbeb59
+349	17342	8050680978833231	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	ca71b2acf263f19b
+736	17546	8050680981639021	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	9b10e493c793c2e1
+1	17630	8050680981829890	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	9811bffd68134472
+131	17909	8050680986375877	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	754c70031120158
+410	19232	8050680999287241	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	641832f410057e2f
+970	19534	8050681002187079	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	d43fb514e3f1a4df
+162	19652	8050681003896574	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	da94b5e16b4dd6f7
+19653	20369	8050681011147605	D:/unity game/Nascar/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/3f6lm17z/obj/arm64-v8a/libgame.so	52211573ecc53889

@@ -4,38 +4,63 @@ using TMPro;
 public class Timer : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
+    public float remainingTime = 60f;
 
-    float elapsedTime;
-    bool timerStarted = false;
-    bool timerStopped = false;
+    public GameObject gameOverPanel;
+
+    private bool timerStarted = false;
+    private bool timerStopped = false;
+
+    void Start()
+    {
+        UpdateTimerUI();
+    }
 
     void Update()
     {
-        // Timer mulai saat tekan W atau Panah Atas
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-        {
-            timerStarted = true;
-        }
-
-        // Timer berjalan
         if (timerStarted && !timerStopped)
         {
-            elapsedTime += Time.deltaTime;
+            remainingTime -= Time.deltaTime;
 
-            int minutes = Mathf.FloorToInt(elapsedTime / 60);
-            int seconds = Mathf.FloorToInt(elapsedTime % 60);
+            if (remainingTime <= 0)
+            {
+                remainingTime = 0;
+                timerStopped = true;
 
-            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+                // Tampilkan Game Over
+                gameOverPanel.SetActive(true);
+
+                // Pause game
+                Time.timeScale = 0f;
+            }
+
+            UpdateTimerUI();
         }
     }
 
-    // Saat menyentuh garis finish
+    public void StartTimer()
+    {
+        timerStarted = true;
+    }
+
+    public void StopTimer()
+    {
+        timerStopped = true;
+    }
+
+    void UpdateTimerUI()
+    {
+        int minutes = Mathf.FloorToInt(remainingTime / 60);
+        int seconds = Mathf.FloorToInt(remainingTime % 60);
+
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Finish"))
         {
-            timerStopped = true;
-            timerText.text += " FINISH!";
+            StopTimer();
         }
     }
 }

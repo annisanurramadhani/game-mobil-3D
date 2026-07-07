@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: ea755ac2d46575341b62c13d30cbf349
+AssetOrigin:
+  serializedVersion: 1
+  productId: 360208
+  packageName: Sport Car Free 5
+  packageVersion: 1.0
+  assetPath: Assets/SportCar/Scenes/SportCar5_Demo/ReflectionProbe-1.exr
+  uploadId: 864042
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -128,10 +135,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 360208
-  packageName: Sport Car Free 5
-  packageVersion: 1.0
-  assetPath: Assets/SportCar/Scenes/SportCar5_Demo/ReflectionProbe-1.exr
-  uploadId: 864042
