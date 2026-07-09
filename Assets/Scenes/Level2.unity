@@ -1884,6 +1884,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arch_01_free_obs
       objectReference: {fileID: 0}
+    - target: {fileID: 7847944484297054210, guid: 63f7e3a5ea486a9438b4cd3142c7dc92, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3547,7 +3551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1354057938
 RectTransform:
   m_ObjectHideFlags: 0
